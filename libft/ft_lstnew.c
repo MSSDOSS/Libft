@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-haia <hel-haia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 19:11:29 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/28 23:39:14 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/25 08:23:47 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/10/25 08:24:54 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+t_list	*ft_lstnew(void *content)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	return (0);
+	t_list	*ret;
+
+	ret = malloc(sizeof(t_list));
+	if (!ret)
+		return (0);
+	ret->content = content;
+	ret->next = 0;
+	return (ret);
 }

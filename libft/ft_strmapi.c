@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/31 05:05:37 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/11/01 18:04:14 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 {
-	size_t	j;
+	char	*str;
 	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
 
-	if (!dst && !src)
-		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
 	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
+	if (!s || !f)
+		return (NULL);
+	str = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (i < ft_strlen(s))
 	{
-		dst[j] = arr[i];
+		str[i] = (*f)(i, s[i]);
 		i++;
-		j++;
 	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	str[i] = '\0';
+	return (str);
 }

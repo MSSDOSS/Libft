@@ -1,58 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atoi.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hel-haia <hel-haia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:18:00 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/12 14:03:06 by hel-haia         ###   ########.fr       */
+/*   Updated: 2022/10/21 00:10:49 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
+
+static int	overf(long long int pre, long long int cur)
+{
+	if (cur / 10 == pre)
+		return (0);
+	return (1);
+}
+
+static int	ispace(char *str, int *pi)
+{
+	int	i;
+	int	sign;
+
+	i = 0;
+	sign = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+				sign = -1;
+			i++;
+	}
+	*pi = i;
+	return (sign);
+}
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int sign;
-	size_t res;
+	int			i;
+	int			sign;
+	long long	res;
+	long long	test;
 
 	res = 0;
-	sign = 1;
-	i = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-')
+	sign = ispace((char *)str, &i);
+	while (((char *)str)[i] >= '0' && ((char *)str)[i] <= '9')
 	{
-		sign *= -1;
+		test = res;
+		res = res * 10 + (((char *)str)[i] - '0');
+		if (overf(test, res) == 1)
+		{
+			if (sign == -1)
+				return (0);
+			return (-1);
+		}
 		i++;
 	}
-	if (str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	if (res > 9223372036854775807)   
-		return (-1);
-	if (res < 9223372036854775807)
-		return (0);
 	return (res * sign);
 }
-
-//#include <stdlib.h>
-//#include <stdio.h>
-
-int main(void)
+/*
+int main ()
 {
-    char *s;
-
-    s = "9223372036854775807";
-	// i = -9885 
-
-    printf("%d\n",ft_atoi(s));
-}
-
+	char s[] = "-4886";
+	printf("%d\n", ft_atoi(s));
+}*/

@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/25 08:58:58 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/10/25 08:59:24 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	size_t	j;
-	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
+	t_list	*ret;
+	t_list	*tmp;
 
-	if (!dst && !src)
-		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
-	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
+	ret = 0;
+	while (lst)
 	{
-		dst[j] = arr[i];
-		i++;
-		j++;
+		tmp = ft_lstnew(f(lst->content));
+		if (!tmp)
+		{
+			ft_lstclear(&ret, del);
+			return (0);
+		}
+		ft_lstadd_back(&ret, tmp);
+		lst = lst->next;
 	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	return (ret);
 }

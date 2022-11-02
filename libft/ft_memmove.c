@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/25 07:53:23 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/10/25 07:53:58 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	j;
-	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
+	void	*ret;
 
 	if (!dst && !src)
 		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
-	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
+	ret = dst;
+	if (src < dst)
 	{
-		dst[j] = arr[i];
-		i++;
-		j++;
+		src += len;
+		dst += len;
+		while (len--)
+			*(char *)--dst = *(char *)--src;
 	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	else
+		while (len--)
+			*(char *)dst++ = *(char *)src++;
+	return (ret);
 }

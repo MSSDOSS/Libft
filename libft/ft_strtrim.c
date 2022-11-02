@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/25 09:03:59 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/10/25 09:04:08 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+static int	ft_isset(char c, const char *set)
 {
-	size_t	j;
-	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
+	while (*set)
+		if (c == *set++)
+			return (1);
+	return (0);
+}
 
-	if (!dst && !src)
+char	*ft_strtrim(const char *s1, const char *set)
+{
+	char	*ret;
+	char	*start;
+	char	*end;
+
+	if (!s1 || !set)
 		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
-	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
-	{
-		dst[j] = arr[i];
-		i++;
-		j++;
-	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	start = (char *)s1;
+	end = start + ft_strlen(s1);
+	while (*start && ft_isset(*start, set))
+		++start;
+	while (start < end && ft_isset(*(end - 1), set))
+		--end;
+	ret = ft_substr(start, 0, end - start);
+	return (ret);
 }

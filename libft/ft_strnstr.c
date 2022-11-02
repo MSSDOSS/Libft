@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/20 20:07:22 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/10/23 03:24:42 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-	size_t	j;
 	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
+	size_t	j;
 
-	if (!dst && !src)
-		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
 	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
+	if (!ft_strlen(to_find))
+		return ((char *)str);
+	if (!ft_strlen(str) || len < ft_strlen(to_find))
+		return (0);
+	while (str[i])
 	{
-		dst[j] = arr[i];
+		j = 0;
+		while (str[i + j] == to_find[j] && (i + j) < len)
+		{
+			if (str[i + j] == '\0' && to_find[j] == '\0')
+				return ((char *)str + i);
+			j++;
+		}
+		if (to_find[j] == '\0')
+			return ((char *)str + i);
 		i++;
-		j++;
 	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	return (0);
 }

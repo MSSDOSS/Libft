@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcat.c                                          :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 06:46:34 by hel-haia         ###   ########.fr       */
+/*   Created: 2022/10/23 00:03:51 by hel-haia          #+#    #+#             */
+/*   Updated: 2022/11/01 16:32:42 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	j;
+	char	*p;
 	size_t	i;
-	size_t	sum_of_arrays;
-	char	*arr;
 
-	if (!dst && !src)
-		return (0);
-	arr = (char *)src;
-	j = ft_strlen(dst);
 	i = 0;
-	if (dstsize >= j)
-		sum_of_arrays = j + ft_strlen(src);
-	if (dstsize <= j)
-		return (dstsize + ft_strlen(arr));
-	while (arr[i] && j < dstsize - 1)
+	if (!s)
+		return (0);
+	if (start > ft_strlen (s))
 	{
-		dst[j] = arr[i];
-		i++;
-		j++;
+		p = malloc (1);
+		if (!p)
+			return (NULL);
+		*p = '\0';
+		return (p);
 	}
-	dst[j] = '\0';
-	return (sum_of_arrays);
+	if (len > ft_strlen (s + start))
+		len = ft_strlen (s + start);
+	p = malloc(sizeof(char) * (len + 1));
+	if (!p)
+		return (0);
+	while (i < len)
+		p[i++] = s[start++];
+	p[i] = '\0';
+	return (p);
 }
