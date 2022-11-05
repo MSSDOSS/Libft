@@ -6,7 +6,7 @@
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 08:58:58 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/10/25 08:59:24 by hel-haia         ###   ########.fr       */
+/*   Updated: 2022/11/05 19:47:44 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*ret;
-	t_list	*tmp;
+	t_list	*final;
+	t_list	*new;
 
-	ret = 0;
+	if (!f || !del)
+		return (NULL);
+	final = NULL;
 	while (lst)
 	{
-		tmp = ft_lstnew(f(lst->content));
-		if (!tmp)
+		new = ft_lstnew(f(lst->content));
+		if (!new)
 		{
-			ft_lstclear(&ret, del);
-			return (0);
+			ft_lstclear(&final, del);
+			return (NULL);
 		}
-		ft_lstadd_back(&ret, tmp);
+		ft_lstadd_back(&final, new);
 		lst = lst->next;
 	}
-	return (ret);
+	return (final);
 }
