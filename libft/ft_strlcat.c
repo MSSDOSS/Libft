@@ -6,7 +6,7 @@
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 21:42:09 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/11/03 18:27:05 by hel-haia         ###   ########.fr       */
+/*   Updated: 2022/11/09 23:17:30 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	size_t	sum_of_arrays;
 	char	*arr;
 
-	if (!dst && !src)
-		return (0);
 	if (!dst && dstsize == 0)
 		return (ft_strlen(src));
 	arr = (char *)src;

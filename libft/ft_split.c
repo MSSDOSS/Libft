@@ -6,92 +6,82 @@
 /*   By: hel-haia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 20:19:01 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/11/01 18:08:15 by hel-haia         ###   ########.fr       */
+/*   Updated: 2022/11/08 06:13:51 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	size_t	wcount(char const *s, char c)
+static size_t	ft_wordc(const char *str, char c)
 {
 	size_t	i;
-	size_t	b;
+	size_t	counter;
 
 	i = 0;
-	b = 0;
-	while (*s)
+	counter = 0;
+	while (str[i] != '\0')
 	{
-		if (*s != c && b == 0)
-		{
-			b = 1;
+		while (str[i] == c)
 			i++;
-		}
-		else if (*s == c)
-			b = 0;
-		s++;
+		if (str[i] != c && str[i] != '\0')
+			counter++;
+		while (str[i] != c && str[i] != '\0')
+			i++;
 	}
-	return (i);
+	return (counter);
 }
 
-static	char	**freeit(char **s, size_t i)
+static char	**free_all(char **s, size_t i)
 {
-	while (i > 0 && s[i] != NULL)
+	size_t	j;
+
+	j = 0;
+	while (j < i && s[j] != NULL)
 	{
-		free (s[i]);
-		s[i] = NULL;
-		i--;
+		free(s[j]);
+		s[j] = NULL;
+		j++;
 	}
 	free(s);
 	s = NULL;
 	return (NULL);
 }
 
-static	void	varinit(size_t *i, size_t *j, long long *id)
+static char	**ft_fill(char const *s, char c, char **spliter, size_t wc)
 {
-	*i = -1;
-	*j = 0;
-	*id = -1;
+	size_t	start;
+	size_t	end;
+	size_t	i;
+
+	start = 0;
+	i = 0;
+	while (i < wc)
+	{
+		while (s[start] && s[start] == c)
+			start++;
+		end = start;
+		while (s[end] && s[end] != c)
+			end++;
+		spliter[i] = ft_substr(s, start, end - start);
+		if (!spliter[i])
+			return (free_all(spliter, i));
+		start = end;
+		i++;
+	}
+	*(spliter + i) = NULL;
+	return (spliter);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t		i;
-	size_t		j;
-	long long	id;
-	char		**doublstr;
+	char	**spliter;
+	size_t	wc;
 
-	varinit(&i, &j, &id);
 	if (!s)
 		return (0);
-	doublstr = malloc((wcount(s, c) + 1) * sizeof(char *));
-	if (!doublstr)
-		return (NULL);
-	while (++i <= ft_strlen(s))
-	{
-		if (s[i] != c && id < 0)
-			id = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && id >= 0)
-		{
-			doublstr[j] = ft_substr(s + id, 0, i - id);
-			if (!doublstr[j++] && i < wcount(s, c))
-				return (freeit(doublstr, j));
-			id = -1;
-		}
-	}
-	doublstr[j] = 0;
-	return (doublstr);
+	wc = ft_wordc(s, c);
+	spliter = malloc((wc + 1) * sizeof(char *));
+	if (!spliter)
+		return (0);
+	return (ft_fill(s, c, spliter, wc));
 }
-/*
-int main()
-{
-	const char s[] = "HAMZA IS THE KING";
-	char c = ' ';
-	size_t i = 0;
-	char **str = ft_split(s, c);
-	while (str[i] != NULL)
-	{
-	printf("%s\n", str[i]);
-	i++;
-	}
-	return (0);
-}*/

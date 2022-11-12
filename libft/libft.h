@@ -6,7 +6,7 @@
 /*   By: hel-haia <hel-haia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 02:49:45 by hel-haia          #+#    #+#             */
-/*   Updated: 2022/11/03 18:34:14 by hel-haia         ###   ########.fr       */
+/*   Updated: 2022/11/08 05:49:29 by hel-haia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <string.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
